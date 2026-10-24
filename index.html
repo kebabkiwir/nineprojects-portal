@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portal akun dengan autentikasi email dan dashboard pengguna.">
+  <meta name="theme-color" content="#101827">
+  <title>Nine Projects Portal</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script type="module" src="assets/app.js"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Nine Projects Portal, halaman utama">
+        <span class="brand-mark">N</span>
+        <span>Nine <span class="brand-light">Projects</span></span>
+      </a>
+      <span class="connection-pill"><span class="connection-dot"></span><span id="connectionLabel">Menunggu konfigurasi</span></span>
+    </header>
+
+    <main>
+      <section id="authView" class="auth-view">
+        <div class="hero-copy">
+          <p class="eyebrow">PORTAL AKUN PRIBADI</p>
+          <h1>Satu tempat untuk mengelola <span>akses Anda.</span></h1>
+          <p class="hero-description">Daftar, masuk, dan kelola profil dari satu dashboard. Hak Anda dilindungi oleh pihak kami untuk email yang telah diverifikasi.</p>
+          <div class="feature-list">
+            <div class="feature"><span class="feature-icon">✓</span><span><strong>Autentikasi email</strong><small>Daftar, masuk, dan reset kata sandi</small></span></div>
+            <div class="feature"><span class="feature-icon">✓</span><span><strong>Profil terhubung database</strong><small>Data akun disimpan di Supabase</small></span></div>
+            <div class="feature"><span class="feature-icon">✓</span><span><strong>Hak akses Individu</strong><small>Aturan akses dijaga oleh pihak kami</small></span></div>
+          </div>
+          <p class="hero-note">Agar bisa masuk, anda harus daftar atau login</p>
+        </div>
+
+        <section class="auth-card" aria-labelledby="authTitle">
+          <div class="card-kicker" id="formKicker">SELAMAT DATANG</div>
+          <h2 id="authTitle">Masuk ke akun</h2>
+          <p class="card-description" id="authDescription">Masukkan email dan kata sandi untuk melanjutkan.</p>
+
+          <form id="authForm" novalidate>
+            <div class="form-field" id="nameField" hidden>
+              <label for="displayName">Nama tampilan</label>
+              <input id="displayName" name="displayName" type="text" autocomplete="name" maxlength="80" placeholder="Nama Anda">
+            </div>
+            <div class="form-field">
+              <label for="email">Alamat email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="nama@email.com" required>
+            </div>
+            <div class="form-field">
+              <label for="password">Kata sandi</label>
+              <div class="password-wrap">
+                <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="Minimal 8 karakter" required>
+                <button class="text-button password-toggle" id="togglePassword" type="button">Lihat</button>
+              </div>
+            </div>
+            <div class="form-field" id="confirmField" hidden>
+              <label for="confirmPassword">Ulangi kata sandi</label>
+              <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Ulangi kata sandi">
+            </div>
+            <div class="form-options" id="loginOptions">
+              <span class="subtle-text">Gunakan email yang valid.</span>
+              <button class="text-button" id="forgotPassword" type="button">Lupa kata sandi?</button>
+            </div>
+            <button class="primary-button" id="submitButton" type="submit">Masuk <span aria-hidden="true">→</span></button>
+            <div id="authNotice" class="notice" role="status" aria-live="polite" hidden></div>
+          </form>
+
+          <div class="card-divider"><span>ATAU</span></div>
+          <p class="switch-copy"><span id="switchQuestion">Belum punya akun?</span> <button class="text-button" id="switchMode" type="button">Buat akun</button></p>
+        </section>
+      </section>
+
+      <section id="recoveryView" class="narrow-view" hidden>
+        <section class="auth-card recovery-card">
+          <p class="eyebrow">PEMULIHAN AKUN</p>
+          <h2>Buat kata sandi baru</h2>
+          <p class="card-description">Pilih kata sandi baru untuk akun Anda.</p>
+          <form id="recoveryForm" novalidate>
+            <div class="form-field"><label for="newPassword">Kata sandi baru</label><input id="newPassword" type="password" minlength="8" autocomplete="new-password" required></div>
+            <div class="form-field"><label for="newPasswordConfirm">Ulangi kata sandi baru</label><input id="newPasswordConfirm" type="password" minlength="8" autocomplete="new-password" required></div>
+            <button class="primary-button" type="submit">Simpan kata sandi <span aria-hidden="true">→</span></button>
+            <div id="recoveryNotice" class="notice" role="status" aria-live="polite" hidden></div>
+          </form>
+        </section>
+      </section>
+
+      <section id="dashboardView" class="dashboard-view" hidden>
+        <div class="dashboard-heading">
+          <div><p class="eyebrow" id="dashboardEyebrow">AREA PENGGUNA</p><h1 id="dashboardTitle">Dashboard</h1><p class="dashboard-subtitle" id="dashboardWelcome">Memuat informasi akun...</p></div>
+          <button class="secondary-button" id="logoutButton" type="button">Keluar <span aria-hidden="true">↗</span></button>
+        </div>
+
+        <div class="summary-grid">
+          <article class="summary-card"><span class="summary-label">Status sesi</span><strong>Aktif</strong><span class="summary-foot">Autentikasi Supabase</span></article>
+          <article class="summary-card"><span class="summary-label">Peran akun</span><strong id="roleValue">Pengguna</strong><span class="summary-foot">Ditetapkan database</span></article>
+          <article class="summary-card"><span class="summary-label">Profil</span><strong id="profileStatus">Terhubung</strong><span class="summary-foot">Database PostgreSQL</span></article>
+        </div>
+
+        <div class="dashboard-columns">
+          <section class="content-card">
+            <div class="section-heading"><div><p class="eyebrow">INFORMASI</p><h2>Profil akun</h2></div></div>
+            <form id="profileForm" class="profile-form" novalidate>
+              <div class="form-field"><label for="profileName">Nama tampilan</label><input id="profileName" maxlength="80" required></div>
+              <div class="form-field"><label for="profileEmail">Alamat email</label><input id="profileEmail" type="email" readonly></div>
+              <button class="secondary-button" type="submit">Simpan profil</button>
+              <div id="profileNotice" class="notice" role="status" aria-live="polite" hidden></div>
+            </form>
+          </section>
+          <section class="content-card admin-panel" id="adminPanel" hidden>
+            <div class="section-heading"><div><p class="eyebrow">AKSES KHUSUS</p><h2>Panel Admin</h2></div><span class="admin-badge">ADMIN</span></div>
+            <p class="panel-description">Daftar pengguna ini hanya bisa dibaca oleh akun dengan peran Admin yang valid di database.</p>
+            <div class="admin-toolbar"><label for="userSearch" class="visually-hidden">Cari pengguna</label><input id="userSearch" type="search" placeholder="Cari nama atau email..."><button class="secondary-button" id="refreshUsers" type="button">Muat ulang</button></div>
+            <div class="table-wrap"><table><thead><tr><th>Pengguna</th><th>Peran</th><th>Terdaftar</th></tr></thead><tbody id="usersTableBody"><tr><td colspan="3" class="empty-cell">Memuat data pengguna...</td></tr></tbody></table></div>
+            <p class="table-caption" id="usersCaption">Data diambil dari tabel profiles.</p>
+            <div id="adminNotice" class="notice" role="status" aria-live="polite" hidden></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">Nine Projects Portal <span>•</span> Dibangun dengan Supabase Auth dan PostgreSQL</footer>
+  </div>
+</body>
+</html>
